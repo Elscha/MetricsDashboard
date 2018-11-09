@@ -1,0 +1,41 @@
+/* Source: https://stackoverflow.com/a/15956101 */
+.ui-layout-north {
+    z-index:20 !important;
+    overflow:visible !important;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+    overflow:visible !important;
+}
+
+/* Source: https://forum.primefaces.org/viewtopic.php?t=3060 */
+.ui-widget {
+   font-size: 13px !important;
+}
+   
+/* https://dzone.com/articles/how-customize-growl-primefaces */
+.ui-growl {   
+    width:501px;
+}
+
+/* https://stackoverflow.com/a/37074243 */
+.ui-growl-message {
+    width: 90%;
+}
+
+/* https://forum.primefaces.org/viewtopic.php?t=19117*/
+.ui-growl-image-info {
+    background-image:url(https://i.skyrock.net/7067/41627067/pics/1660302358.gif) !important;
+    background-size: 32px 32px !important;
+}
+
+.ui-growl-image-info {
+  background-position: 0 0px !important;
+
+}
+
+/* https://stackoverflow.com/a/17690809
+   https://www.primefaces.org/showcase/ui/misc/progressBar.xhtml */
+.animated .ui-progressbar-value { 
+    background-image: url(images/pbar-ani.gif) !important;
+}

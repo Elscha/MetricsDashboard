@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<ui:composition template="templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Metric Details View</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+		   <p:panel id="metricDetail_main" header="Metric Info" style="margin-bottom:20px">
+	        <p:outputPanel id="metricDetail" style="text-align:center;">
+	            <p:panelGrid  columns="2" rendered="#{not empty metricsBean.selectedElement}" columnClasses="label,value">
+	                <h:outputText value="Id:" />
+	                <h:outputText value="#{metricsBean.selectedElement.metric_id}" />
+	 
+	                <h:outputText value="Name" />
+	                <h:outputText value="#{metricsBean.selectedElement.metric_name}" />
+	 
+	            </p:panelGrid>
+	        </p:outputPanel>
+	     </p:panel>
+	       
+	       <p:panel id="metricStatistics_main" header="Metric Statistics" toggleable="true" toggleSpeed="500" style="margin-bottom:20px">
+			      <p:panel id="controlPnl" rendered="#{not metricsBean.metricStatsAvailable}" widgetVar="controlPnlWidget" closable="true">
+			        <p:commandButton value="Compute Statistics" actionListener="#{metricsBean.statistics}" update=":form:metricStatistics_main" widgetVar="btnCompute" onclick="PF('pbAjax').start();PF('btnCompute').disable();"/>
+			        <p>Computation may take up to 5 Min.</p>
+			        
+			        <p:progressBar async="true" widgetVar="pbAjax" value="#{metricsBean.progress.progress}" ajax="true" labelTemplate="{value}%" styleClass="animated" interval="2" >
+			           <p:ajax event="complete" update=":form:metricStatistics_main"/>
+			        </p:progressBar>
+		        </p:panel>
+		        
+		        
+		        <p:panel id="metricStatistics" rendered="#{metricsBean.metricStatsAvailable}" style="text-align:center;">
+	              <p:panelGrid  columns="5">
+		              <p:panelGrid  columns="2"  columnClasses="label,value">
+		                  <f:facet name="header">
+		                      <p:column colspan="2">Statistics over all Functions</p:column>
+		                  </f:facet>
+		                  <h:outputText value="Min:" />
+		                  <h:outputText value="#{metricsBean.metricStats[0].min}" />
+		   
+		                  <h:outputText value="Max:" />
+		                  <h:outputText value="#{metricsBean.metricStats[0].max}" />
+		                  
+		                  <h:outputText value="Mean:" />
+		                  <h:outputText value="#{metricsBean.metricStats[0].mean}" />
+		                  
+		                  <h:outputText value="Variance:" />
+		                  <h:outputText value="#{metricsBean.metricStats[0].variance}" />
+		
+		                  <h:outputText value="Standard Derivation:" />
+		                  <h:outputText value="#{metricsBean.metricStats[0].standardDeviation}" />
+		                  
+		                  <h:outputText value="Measures Items:" />
+		                  <h:outputText value="#{metricsBean.metricStats[0].n}" />
+		                  
+		                  <h:outputText value="Computation Time:" />
+		                  <h:outputText value="#{metricsBean.metricStats[0].time}" />
+		   
+		              </p:panelGrid>
+		              
+		              <p:panelGrid  columns="2"  columnClasses="label,value">
+                      <f:facet name="header">
+                          <p:column colspan="2">Statistics over Errors</p:column>
+                      </f:facet>
+                      <h:outputText value="Min:" />
+                      <h:outputText value="#{metricsBean.metricStats[1].min}" />
+       
+                      <h:outputText value="Max:" />
+                      <h:outputText value="#{metricsBean.metricStats[1].max}" />
+                      
+                      <h:outputText value="Mean:" />
+                      <h:outputText value="#{metricsBean.metricStats[1].mean}" />
+                      
+                      <h:outputText value="Variance:" />
+                      <h:outputText value="#{metricsBean.metricStats[1].variance}" />
+    
+                      <h:outputText value="Standard Derivation:" />
+                      <h:outputText value="#{metricsBean.metricStats[1].standardDeviation}" />
+                      
+                      <h:outputText value="Measures Items:" />
+                      <h:outputText value="#{metricsBean.metricStats[1].n}" />
+                      
+                      <h:outputText value="Computation Time:" />
+                      <h:outputText value="#{metricsBean.metricStats[1].time}" />
+       
+                  </p:panelGrid>
+                  
+                   <p:chart type="bar" model="#{metricStatisticsChartsBean.barModel}" style="height:300px" responsive="true"/>
+                    <script>
+                         function chartExtender () {
+                            this.cfg.grid = {
+                               background: '#FFF' //Set background to white
+                            };
+                          }
+                    </script>
+                    
+                  
+                  <p:graphicImage value="#{metricStatisticsChartsBean.chart}" stream="false" rendered="#{not empty metricStatisticsChartsBean.chart}"/>
+                    
+                  
+                </p:panelGrid>
+	          </p:panel>
+         </p:panel>
+	  </h:form>
+	</ui:define>
+</ui:composition>

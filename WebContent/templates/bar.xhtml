@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<ui:composition template="templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+<ui:define name="title">Metrics DB Viewer</ui:define>
+<ui:define name="content">
+  <p:graphicImage value="#{metricStatisticsChartsBean.chart}" stream="false" />
+  
+</ui:define>
+</ui:composition>

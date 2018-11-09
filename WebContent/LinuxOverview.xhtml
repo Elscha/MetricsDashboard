@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<ui:composition template="templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Metrics View</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<p:dataTable var="linux" value="#{linuxOverviewBean.table}" rows="10" id="linuxInfo" lazy="true">
+			  
+			  <p:column headerText="ID" sortBy="#{linux.linux_id}">
+			    <h:outputText value="#{linux.linux_id}"/>
+			  </p:column>
+			  <p:column headerText="Version" sortBy="#{linux.version}" filterBy="#{linux.version}">
+			    <h:outputText value="#{linux.version}"/>
+			  </p:column>
+			  <p:column headerText="No. of Measured Functions" sortBy="#{linux.measures}">
+			    <h:outputText value="#{linux.measures}"/>
+			  </p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+
+  <ui:define name="sqlQueryButton">
+      <p:commandButton value="Show Query" actionListener="#{linuxOverviewBean.sqlQuery}" update=":title_form:growl"/>
+  </ui:define>
+</ui:composition>

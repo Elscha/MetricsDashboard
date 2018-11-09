@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<ui:composition template="templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+<ui:define name="title">Function Overview</ui:define>
+<ui:define name="content">
+	<h:form id="form">
+		<p:dataTable var="overview" value="#{functionOverviewBean.functionOverview}">
+		  
+		  <p:column headerText="Functions">
+		    <h:outputText value="#{overview.severity}"/>
+		  </p:column>
+		  <p:column style="text-align: right" headerText="Occurrences">
+		    <h:outputText value="#{overview.occurrence}"/>
+		  </p:column>
+		</p:dataTable>
+	</h:form>
+</ui:define>
+</ui:composition>

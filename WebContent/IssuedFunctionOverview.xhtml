@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<ui:composition template="templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Functions of the Kbuild-All Mailing List</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+		  <p>Shows only functions for which an analyzed report of the <a href="https://lists.01.org/pipermail/kbuild-all/">
+		  kbuild-all mailing list</a> exists. This includes <i>errors</i>, but also <i>warnings</i>, <i>notes</i>,
+		  <i>sparses</i>, and <i>unknowns</i>. Other functions are not listed here.</p>
+		  
+	    <p:dataTable var="function" value="#{issuedFunctionBean.table}" paginator="true" rows="100"
+	      paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+	      rowsPerPageTemplate="20,50,100,500,1000" id="functionsTable" lazy="true"
+	      selectionMode="single" selection="#{functionView.selectedElement}">
+	      
+	      <p:ajax event="rowSelect" listener="#{issuedFunctionBean.onRowSelect}" />
+	      <p:column headerText="ID" sortBy="#{function.id}" filterBy="#{function.id}">
+	        <h:outputText style="text-align: left" value="#{function.id}"/>
+	      </p:column>
+	      <p:column headerText="Path" sortBy="#{function.path}" filterBy="#{function.path}">
+	        <h:outputText value="#{function.path}"/>
+	      </p:column>
+	      <p:column headerText="Function" sortBy="#{function.name}" filterBy="#{function.name}">
+	        <h:outputText value="#{function.name}"/>
+	      </p:column>
+	      <p:column headerText="Issue Count" sortBy="#{function.errors}">
+	        <h:outputText value="#{function.errors}"/>
+	      </p:column>
+	    </p:dataTable>
+	  </h:form>
+	</ui:define>
+	
+	<ui:define name="sqlQueryButton">
+      <p:commandButton value="Show Query" actionListener="#{issuedFunctionBean.sqlQuery}" update=":title_form:growl"/>
+  </ui:define>
+</ui:composition>

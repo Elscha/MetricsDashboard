@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<ui:composition template="templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Functions View</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+	        <p:outputPanel id="functionDetail" style="text-align:center;">
+	            <p:panelGrid  columns="2" rendered="#{not empty functionView.selectedElement}" columnClasses="label,value">
+	                <h:outputText value="Id:" />
+	                <h:outputText value="#{functionView.selectedElement.id}" />
+	 
+	                <h:outputText value="Path" />
+	                <h:outputText value="#{functionView.selectedElement.path}" />
+	 
+	                <h:outputText value="Function:" />
+	                <h:outputText value="#{functionView.selectedElement.name}" />
+	 
+	                <h:outputText value="Error Count:" />
+	                <h:outputText value="#{functionView.selectedElement.errors}" />
+	            </p:panelGrid>
+	            
+	            <p:dataTable var="bug" value="#{functionView.bug}" paginator="true" rows="10"
+				      paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				      rowsPerPageTemplate="5,10,20" id="bugsTable" lazy="true">
+	      
+					      <p:column headerText="ID">
+					        <h:outputText value="#{bug.bug_id}"/>
+					      </p:column>
+					      <p:column headerText="Date">
+					        <h:outputText value="#{bug.bug_date}"/>
+					      </p:column>
+					      <p:column headerText="Repo">
+					        <h:outputText value="#{bug.bug_repository}"/>
+					      </p:column>
+					      <p:column headerText="Commit">
+					        <h:outputText value="#{bug.bug_commit}"/>
+					      </p:column>
+					      <p:column headerText="Severity">
+					        <h:outputText value="#{bug.bug_severity}"/>
+					      </p:column>
+					      <p:column headerText="Line">
+					        <h:outputText value="#{bug.bug_line}"/>
+					      </p:column>
+					      <p:column headerText="Mailing List">
+					        <p:link value="#{bug.bug_source}" href="https://lists.01.org/pipermail/kbuild-all/#{bug.bug_source}/thread.html" target="_blank"/>
+					      </p:column>
+					    </p:dataTable>
+	        </p:outputPanel>
+	  </h:form>
+	</ui:define>
+
+  <ui:define name="sqlQueryButton">
+      <p:commandButton value="Show Query" actionListener="#{functionView.bug.sqlQuery}" update=":title_form:growl"/>
+  </ui:define>
+</ui:composition>

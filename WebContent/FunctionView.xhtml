@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<ui:composition template="templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Functions View</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<p:dataTable var="function" value="#{functionView.table}" paginator="true" rows="100"
+			  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+			  rowsPerPageTemplate="20,50,100,500,1000" id="functionsTable" lazy="true"
+			  selectionMode="single" selection="#{functionView.selectedElement}">
+			  
+			  <p:ajax event="rowSelect" listener="#{functionView.onRowSelect}" />
+			  <p:column headerText="ID" sortBy="#{function.id}" filterBy="#{function.id}">
+			    <h:outputText style="text-align: left" value="#{function.id}"/>
+			  </p:column>
+			  <p:column headerText="Path" sortBy="#{function.path}" filterBy="#{function.path}">
+			    <h:outputText value="#{function.path}"/>
+			  </p:column>
+			  <p:column headerText="Function" sortBy="#{function.name}" filterBy="#{function.name}">
+			    <h:outputText value="#{function.name}"/>
+			  </p:column>
+			  <p:column headerText="Error Count" sortBy="#{function.errors}">
+			    <h:outputText value="#{function.errors}"/>
+			  </p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+
+  <ui:define name="sqlQueryButton">
+      <p:commandButton value="Show Query" actionListener="#{functionView.sqlQuery}" update=":title_form:growl"/>
+  </ui:define>
+</ui:composition>

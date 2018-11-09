@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<ui:composition template="templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+<ui:define name="title">Metrics DB Viewer</ui:define>
+<ui:define name="content">
+  <h:form>
+      <h:panelGrid columns="2" cellpadding="10">
+          <p:outputLabel for="basic" value="Theme:" />
+          <p:themeSwitcher id="basic" style="width:165px">
+              <f:selectItem itemLabel="Choose Theme" itemValue="" />
+              <f:selectItems value="#{themeSwitcherView.themes}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme.name}"/>
+              <p:ajax global="false" listener="#{themeSwitcherView.saveTheme}" />
+          </p:themeSwitcher>
+      </h:panelGrid>
+  </h:form>
+  
+  <p:panel id="settings" header="DB Settings" toggleable="true" toggleSpeed="500" style="margin-bottom:20px">
+        <p:panelGrid  columns="2" var="db" value="#{dbSettingsService.db}" columnClasses="label,value">
+                <h:outputText value="URL:" />
+                <h:outputText value="#{db.url}" />
+ 
+                <h:outputText value="User Name:" />
+                <h:outputText value="#{db.user}" />
+ 
+                <h:outputText value="Password" />
+                <h:outputText value="#{db.pw}" />
+
+            </p:panelGrid>
+    </p:panel>
+    
+    <p:panel id="dbs" header="Databases" toggleable="true" toggleSpeed="500" style="margin-bottom:20px">
+        <h:form id="form">
+			    <p:dataTable var="dbInfo" value="#{databaseInfoBean.table}" rows="10" id="dbInfo" lazy="true">
+			      
+			      <p:column headerText="Schema">
+			        <h:outputText value="#{dbInfo.table_schema}"/>
+			      </p:column>
+			      <p:column headerText="Name" sortBy="#{dbInfo.table_name}">
+			        <h:outputText value="#{dbInfo.table_name}"/>
+			      </p:column>
+			      <p:column headerText="Size" style="text-align: right" sortBy="#{dbInfo.size}">
+			        <h:outputText value="#{dbInfo.size}"/>
+			      </p:column>
+			      <p:column headerText="Rows" style="text-align: right" sortBy="#{dbInfo.table_rows}">
+			        <h:outputText value="#{dbInfo.table_rows}"/>
+			      </p:column>
+			      <p:column headerText="Code" sortBy="#{dbInfo.table_collation}">
+              <h:outputText value="#{dbInfo.table_collation}"/>
+            </p:column>
+			      <p:column headerText="Created" sortBy="#{dbInfo.create_time}">
+              <h:outputText value="#{dbInfo.create_time}"/>
+            </p:column>
+			      <p:column headerText="Increment" style="text-align: right" sortBy="#{dbInfo.auto_increment}">
+              <h:outputText value="#{dbInfo.auto_increment}"/>
+            </p:column>
+			    </p:dataTable>
+        </h:form>
+    </p:panel>
+  
+</ui:define>
+</ui:composition>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<ui:composition template="templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Metrics View</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<p:dataTable var="metric" value="#{metricsBean.table}" paginator="true" rows="100"
+			  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+			  rowsPerPageTemplate="20,50,100,500,1000" id="functionsTable" lazy="true"
+			  selectionMode="single" selection="#{metricsBean.selectedElement}">
+			  
+			  <p:ajax event="rowSelect" listener="#{metricsBean.onRowSelect}" />
+			  <p:column headerText="ID" sortBy="#{metric.metric_id}">
+			    <h:outputText value="#{metric.metric_id}"></h:outputText>
+			  </p:column>
+			  <p:column headerText="Name" sortBy="#{metric.metric_name}" filterBy="#{metric.metric_name}">
+			    <h:outputText value="#{metric.metric_name}"></h:outputText>
+			  </p:column>
+			</p:dataTable>
+			
+			
+		</h:form>
+	</ui:define>
+	
+	<ui:define name="sqlQueryButton">
+	    <p:commandButton value="Show Query" actionListener="#{metricsBean.sqlQuery}" update=":title_form:growl"/>
+	</ui:define>
+</ui:composition>

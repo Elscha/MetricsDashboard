@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<ui:composition template="template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+<ui:define name="title">Functions View</ui:define>
+<ui:define name="content">
+	<h:form id="form">
+		<p:dataTable var="function" value="#{functionView.functionTbl}" paginator="true" rows="100"
+		  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+		  rowsPerPageTemplate="20,50,100,500,1000" id="functionsTable" lazy="true"
+		  selectionMode="single" selection="#{functionView.selectedFunction}">
+		  
+		  <p:ajax event="rowSelect" listener="#{functionView.onRowSelect}" update=":form:functionDetail" oncomplete="PF('functionDialog').show()" />
+		  <p:column headerText="ID" sortBy="#{function.id}" filterBy="#{function.id}">
+		    <h:outputText value="#{function.id}"></h:outputText>
+		  </p:column>
+		  <p:column headerText="Path" sortBy="#{function.path}" filterBy="#{function.path}">
+		    <h:outputText value="#{function.path}"></h:outputText>
+		  </p:column>
+		  <p:column headerText="Function" sortBy="#{function.name}" filterBy="#{function.name}">
+		    <h:outputText value="#{function.name}"></h:outputText>
+		  </p:column>
+		  <p:column headerText="Error Count" sortBy="#{function.errors}">
+		    <h:outputText value="#{function.errors}"></h:outputText>
+		  </p:column>
+		</p:dataTable>
+	
+	  <p:dialog header="Function Detail" widgetVar="functionDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="functionDetail" style="text-align:center;">
+            <p:panelGrid  columns="2" rendered="#{not empty functionView.selectedFunction}" columnClasses="label,value">
+                <h:outputText value="Id:" />
+                <h:outputText value="#{functionView.selectedFunction.id}" />
+ 
+                <h:outputText value="Path" />
+                <h:outputText value="#{functionView.selectedFunction.path}" />
+ 
+                <h:outputText value="Function:" />
+                <h:outputText value="#{functionView.selectedFunction.name}" />
+ 
+                <h:outputText value="Error Count:" />
+                <h:outputText value="#{functionView.selectedFunction.errors}" />
+            </p:panelGrid>
+            
+            <p:dataTable var="bug" value="#{functionView.bug}" paginator="true" rows="5"
+			      paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+			      rowsPerPageTemplate="5,10,20" id="bugsTable" lazy="true">
+      
+				      <p:column headerText="ID">
+				        <h:outputText value="#{bug.bug_id}"></h:outputText>
+				      </p:column>
+				      <p:column headerText="Date">
+				        <h:outputText value="#{bug.bug_date}"></h:outputText>
+				      </p:column>
+				      <p:column headerText="Repo">
+				        <h:outputText value="#{bug.bug_repository}"></h:outputText>
+				      </p:column>
+				      <p:column headerText="Commit">
+				        <h:outputText value="#{bug.bug_commit}"></h:outputText>
+				      </p:column>
+				      <p:column headerText="Severity">
+				        <h:outputText value="#{bug.bug_severity}"></h:outputText>
+				      </p:column>
+				      <p:column headerText="Line">
+				        <h:outputText value="#{bug.bug_line}"></h:outputText>
+				      </p:column>
+				      <p:column headerText="Mailing List">
+				        <h:outputText value="#{bug.bug_source}"></h:outputText>
+				      </p:column>
+				    </p:dataTable>
+        </p:outputPanel>
+    </p:dialog>
+  </h:form>
+</ui:define>
+</ui:composition>

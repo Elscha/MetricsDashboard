@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    
+    
+    <h:head>
+      <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png"/>
+			<!-- <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png"/> -->
+			<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png"/>
+        <title>
+            <ui:insert name="title">Some title</ui:insert>
+        </title>
+    </h:head>
+
+    <!-- <ui:include src="header.xhtml"/> -->
+
+    <h:body>
+      <link type="text/css" rel="stylesheet" href="templates/cssOverrides.css"/>
+      <p:layout fullPage="true" resizeTitle="resize">
+    
+	    <!--  Header -->
+	    <p:layoutUnit position="north" size="150" id="layoutTitle" >
+	    <div style="text-align: center;">
+	      <h1>
+	          <img src="images/SSE_Linux.png" alt="" height="56" style="vertical-align: middle;"/>
+	          <span style="vertical-align: middle;">Metrics Dashboard</span>
+	      </h1>
+	    </div>
+	    
+	    <h:form id="title_form">
+	      <p:growl id="growl" showDetail="true" sticky="true"/>  
+	    </h:form>
+	    <p:menubar>
+	       <p:menuitem value="Start" url="index.xhtml" />
+	       <p:submenu label="Functions" >
+	           <p:menuitem value="Overview" url="FunctionOverview.xhtml" />
+	           <p:menuitem value="List all Functions" url="FunctionView.xhtml" />
+	           <p:menuitem value="List issued Functions" url="IssuedFunctionOverview.xhtml" />
+	       </p:submenu>
+	       <p:submenu label="Metrics">
+	           <p:menuitem value="List" url="MetricsView.xhtml" />
+	       </p:submenu>
+	       <p:submenu label="Linux">
+	           <p:menuitem value="Overview" url="LinuxOverview.xhtml" />
+	       </p:submenu>
+	       <p:submenu label="Tools">
+             <p:menuitem value="KernelHaven" url="https://github.com/KernelHaven/KernelHaven" target="_blank"/>
+             <p:menuitem value="MetricHaven" url="https://github.com/KernelHaven/MetricHaven" target="_blank"/>
+             <p:menuitem value="Metric Results Repository" url="https://github.com/SSE-LinuxAnalysis/MetricResults" target="_blank"/>
+         </p:submenu>
+	    </p:menubar>
+	    </p:layoutUnit>
+    
+	    <!--  Content -->
+	    <p:layoutUnit styleClass="layoutContent" position="center">
+	      <ui:insert name="content" />
+	    </p:layoutUnit>
+	    
+	    <!-- Footer -->
+	    <p:layoutUnit position="south" id="layoutFooter">
+	       <p:commandButton value="GO BACK!" onclick="window.history.back();"/>
+	       <ui:insert name="sqlQueryButton" />
+	    </p:layoutUnit>
+	    
+	    </p:layout>
+    </h:body>
+</html>
